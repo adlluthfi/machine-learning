@@ -1,0 +1,19 @@
+{
+    "model_name": "Diabetes",
+    "feature_names": [
+        "Pregnancies",
+        "Glucose",
+        "BloodPressure",
+        "SkinThickness",
+        "Insulin",
+        "BMI",
+        "DiabetesPedigreeFunction",
+        "Age"
+    ],
+    "metrics": {
+        "accuracy": 0.8311688311688312,
+        "precision": 0.8018518518518518,
+        "recall": 0.8203616352201257,
+        "f1_score": 0.8094422234913383
+    }
+}

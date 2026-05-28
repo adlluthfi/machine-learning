@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/diabetes">Diabetes</a></li>
+                <li><a href="/blood-test">Blood Test</a></li>
+                <li><a href="/sleep-disorder">Sleep Disorder</a></li>
+                <li><a href="/test-model" class="active">Test Model</a></li>
+                <li><a href="/about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="form-section">
+            <h1>Test Model Accuracy</h1>
+            <p class="subtitle">Bandingkan prediksi dengan data aktual</p>
+
+            <div class="form-container">
+                <form id="testForm" class="prediction-form">
+                    <div class="form-group">
+                        <label for="testData">Paste JSON Data (actual vs predicted):</label>
+                        <textarea id="testData" name="testData" rows="8"
+                            placeholder='[{"actual": 1, "predicted": 1}, {"actual": 0, "predicted": 0}]'
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Hitung Akurasi</button>
+                </form>
+
+                <div id="result" class="result-container" style="display:none;">
+                    <div class="result-card">
+                        <h2>Hasil Test</h2>
+                        <div class="prediction-result">
+                            <div class="metric">
+                                <span class="label">Total Data:</span>
+                                <span class="value" id="totalData">0</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Prediksi Benar:</span>
+                                <span class="value" id="correctData">0</span>
+                            </div>
+                            <div class="metric">
+                                <span class="label">Akurasi:</span>
+                                <span class="value" id="accuracyValue">0%</span>
+                            </div>
+                        </div>
+                        <button onclick="resetForm()" class="btn btn-secondary">Test Lagi</button>
+                    </div>
+                </div>
+            </div>
+
+            <section class="template-section">
+                <h3>Template Format JSON:</h3>
+                <pre><code>[
+  {"actual": 1, "predicted": 1},
+  {"actual": 0, "predicted": 0},
+  {"actual": 1, "predicted": 0},
+  {"actual": 0, "predicted": 1}
+]</code></pre>
+            </section>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('testForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            try {
+                const jsonData = JSON.parse(document.getElementById('testData').value);
+
+                const actual = jsonData.map(d => d.actual);
+                const predicted = jsonData.map(d => d.predicted);
+
+                const response = await fetch('/api/test-accuracy', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ actual: actual, predicted: predicted })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById('totalData').textContent = data.total;
+                    document.getElementById('correctData').textContent = data.correct;
+                    document.getElementById('accuracyValue').textContent = data.accuracy;
+                    document.getElementById('result').style.display = 'block';
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Format JSON tidak valid: ' + error);
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('testForm').reset();
+            document.getElementById('result').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

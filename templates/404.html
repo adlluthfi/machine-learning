@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Tidak Ditemukan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/diabetes">Diabetes</a></li>
+                <li><a href="/blood-test">Blood Test</a></li>
+                <li><a href="/sleep-disorder">Sleep Disorder</a></li>
+                <li><a href="/test-model">Test Model</a></li>
+                <li><a href="/about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="error-section">
+            <div class="error-card">
+                <h1>404</h1>
+                <h2>Halaman Tidak Ditemukan</h2>
+                <p>Maaf, halaman yang Anda cari tidak ada.</p>
+                <a href="/" class="btn btn-primary">Kembali ke Dashboard</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

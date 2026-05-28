@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Aplikasi</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/diabetes">Diabetes</a></li>
+                <li><a href="/blood-test">Blood Test</a></li>
+                <li><a href="/sleep-disorder">Sleep Disorder</a></li>
+                <li><a href="/test-model">Test Model</a></li>
+                <li><a href="/about" class="active">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="about-section">
+            <h1>Tentang Aplikasi</h1>
+
+            <div class="about-content">
+                <div class="about-card">
+                    <h2>🎯 Tujuan Aplikasi</h2>
+                    <p>Aplikasi ini dirancang untuk memberikan prediksi kesehatan menggunakan algoritma Machine Learning
+                        Gaussian Naive Bayes. Sistem ini dapat membantu dalam deteksi awal penyakit dan gangguan
+                        kesehatan.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>📊 Model yang Tersedia</h2>
+                    <ul>
+                        <li><strong>Diabetes Predictor:</strong> Memprediksi risiko diabetes berdasarkan data metabolik
+                        </li>
+                        <li><strong>Blood Test Analyzer:</strong> Menganalisis hasil tes darah untuk diagnosis</li>
+                        <li><strong>Sleep Disorder Detector:</strong> Mendeteksi gangguan tidur berdasarkan pola tidur
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>🔬 Metodologi</h2>
+                    <p>Semua model menggunakan algoritma <strong>Gaussian Naive Bayes</strong> yang dilatih dengan data
+                        kesehatan berkualitas tinggi. Model telah divalidasi dan menunjukkan akurasi yang baik.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>⚠️ Disclaimer</h2>
+                    <p>Aplikasi ini adalah untuk tujuan edukatif dan tidak menggantikan konsultasi medis profesional.
+                        Selalu konsultasikan dengan dokter untuk diagnosis dan perawatan yang akurat.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>📈 Fitur Aplikasi</h2>
+                    <ul>
+                        <li>✅ Prediksi real-time menggunakan model terlatih</li>
+                        <li>✅ Dashboard dengan metrik performa model</li>
+                        <li>✅ Test akurasi dengan data aktual</li>
+                        <li>✅ Interface yang user-friendly</li>
+                        <li>✅ API endpoint untuk integrasi</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>💻 Teknologi yang Digunakan</h2>
+                    <ul>
+                        <li>Backend: Python Flask</li>
+                        <li>Frontend: HTML5, CSS3, JavaScript</li>
+                        <li>Machine Learning: scikit-learn</li>
+                        <li>Database: JSON untuk metadata model</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

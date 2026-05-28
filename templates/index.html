@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/" class="active">Dashboard</a></li>
+                <li><a href="/diabetes">Diabetes</a></li>
+                <li><a href="/blood-test">Blood Test</a></li>
+                <li><a href="/sleep-disorder">Sleep Disorder</a></li>
+                <li><a href="/test-model">Test Model</a></li>
+                <li><a href="/about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <h1>Dashboard Model Prediksi Kesehatan</h1>
+            <p>Sistem Machine Learning Gaussian Naive Bayes untuk prediksi penyakit</p>
+        </section>
+
+        <section class="models-grid">
+            {% for model in models %}
+            <div class="model-card">
+                <div class="card-header">
+                    <h2>{{ model.name }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="metric">
+                        <span class="label">Accuracy:</span>
+                        <span class="value">{{ model.accuracy }}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Precision:</span>
+                        <span class="value">{{ model.precision }}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Recall:</span>
+                        <span class="value">{{ model.recall }}</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">F1-Score:</span>
+                        <span class="value">{{ model.f1_score }}</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    {% if model.name == 'Diabetes' %}
+                    <a href="/diabetes" class="btn btn-primary">Gunakan Model</a>
+                    {% elif model.name == 'Blood Test' %}
+                    <a href="/blood-test" class="btn btn-primary">Gunakan Model</a>
+                    {% elif model.name == 'Sleep Disorder' %}
+                    <a href="/sleep-disorder" class="btn btn-primary">Gunakan Model</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

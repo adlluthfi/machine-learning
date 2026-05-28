@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Diabetes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/diabetes" class="active">Diabetes</a></li>
+                <li><a href="/blood-test">Blood Test</a></li>
+                <li><a href="/sleep-disorder">Sleep Disorder</a></li>
+                <li><a href="/test-model">Test Model</a></li>
+                <li><a href="/about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="form-section">
+            <h1>Prediksi Diabetes</h1>
+            <p class="subtitle">Masukkan data kesehatan Anda untuk prediksi</p>
+
+            <div class="form-container">
+                <form id="diabetesForm" class="prediction-form">
+                    <div class="form-group">
+                        <label for="pregnancies">Jumlah Kehamilan:</label>
+                        <input type="number" id="pregnancies" name="pregnancies" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="glucose">Glukosa (mg/dL):</label>
+                        <input type="number" id="glucose" name="glucose" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="blood_pressure">Tekanan Darah (mmHg):</label>
+                        <input type="number" id="blood_pressure" name="blood_pressure" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="skin_thickness">Ketebalan Kulit (mm):</label>
+                        <input type="number" id="skin_thickness" name="skin_thickness" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="insulin">Insulin (mu U/ml):</label>
+                        <input type="number" id="insulin" name="insulin" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bmi">BMI (kg/m²):</label>
+                        <input type="number" id="bmi" name="bmi" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="diabetes_pedigree">Riwayat Keluarga Diabetes:</label>
+                        <input type="number" id="diabetes_pedigree" name="diabetes_pedigree" min="0" step="0.001"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Usia (tahun):</label>
+                        <input type="number" id="age" name="age" min="0" step="1" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Prediksi</button>
+                </form>
+
+                <div id="result" class="result-container" style="display:none;">
+                    <div class="result-card">
+                        <h2>Hasil Prediksi</h2>
+                        <div class="prediction-result">
+                            <p id="predictionText"></p>
+                            <p id="probabilityText"></p>
+                        </div>
+                        <button onclick="resetForm()" class="btn btn-secondary">Prediksi Lagi</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('diabetesForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const features = [
+                parseFloat(document.getElementById('pregnancies').value),
+                parseFloat(document.getElementById('glucose').value),
+                parseFloat(document.getElementById('blood_pressure').value),
+                parseFloat(document.getElementById('skin_thickness').value),
+                parseFloat(document.getElementById('insulin').value),
+                parseFloat(document.getElementById('bmi').value),
+                parseFloat(document.getElementById('diabetes_pedigree').value),
+                parseFloat(document.getElementById('age').value)
+            ];
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model_name: 'diabetes', features: features })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    const pred = data.prediction === 1 ? '✅ POSITIF (Terkena Diabetes)' : '❌ NEGATIF (Tidak Terkena Diabetes)';
+                    document.getElementById('predictionText').textContent = pred;
+                    document.getElementById('probabilityText').textContent =
+                        `Confidence: ${(Math.max(...data.probability) * 100).toFixed(2)}%`;
+                    document.getElementById('result').style.display = 'block';
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan: ' + error);
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('diabetesForm').reset();
+            document.getElementById('result').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

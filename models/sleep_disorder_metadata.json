@@ -1,0 +1,22 @@
+{
+    "model_name": "Sleep Disorder",
+    "feature_names": [
+        "Gender",
+        "Age",
+        "Occupation",
+        "Sleep Duration",
+        "Quality of Sleep",
+        "Physical Activity Level",
+        "Stress Level",
+        "BMI Category",
+        "Blood Pressure",
+        "Heart Rate",
+        "Daily Steps"
+    ],
+    "metrics": {
+        "accuracy": 0.88,
+        "precision": 0.8442508710801393,
+        "recall": 0.8641414141414141,
+        "f1_score": 0.8470588235294118
+    }
+}

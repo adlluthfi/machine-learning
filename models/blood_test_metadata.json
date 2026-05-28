@@ -1,0 +1,21 @@
+{
+    "model_name": "Blood Test",
+    "feature_names": [
+        "HAEMATOCRIT",
+        "HAEMOGLOBINS",
+        "ERYTHROCYTE",
+        "LEUCOCYTE",
+        "THROMBOCYTE",
+        "MCH",
+        "MCHC",
+        "MCV",
+        "AGE",
+        "SEX"
+    ],
+    "metrics": {
+        "accuracy": 0.7021517553793885,
+        "precision": 0.691252222795847,
+        "recall": 0.6775516290166257,
+        "f1_score": 0.6808748050377558
+    }
+}

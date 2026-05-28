@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Blood Test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/diabetes">Diabetes</a></li>
+                <li><a href="/blood-test" class="active">Blood Test</a></li>
+                <li><a href="/sleep-disorder">Sleep Disorder</a></li>
+                <li><a href="/test-model">Test Model</a></li>
+                <li><a href="/about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="form-section">
+            <h1>Prediksi Blood Test</h1>
+            <p class="subtitle">Masukkan data hasil lab Anda untuk prediksi</p>
+
+            <div class="form-container">
+                <form id="bloodTestForm" class="prediction-form">
+                    <div class="form-group">
+                        <label for="age">Usia (tahun):</label>
+                        <input type="number" id="age" name="age" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wbc">WBC (White Blood Cell):</label>
+                        <input type="number" id="wbc" name="wbc" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rbc">RBC (Red Blood Cell):</label>
+                        <input type="number" id="rbc" name="rbc" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hgb">Hemoglobin (Hgb):</label>
+                        <input type="number" id="hgb" name="hgb" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hct">Hematocrit (Hct):</label>
+                        <input type="number" id="hct" name="hct" min="0" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="plt">Platelets (Plt):</label>
+                        <input type="number" id="plt" name="plt" min="0" step="1" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Prediksi</button>
+                </form>
+
+                <div id="result" class="result-container" style="display:none;">
+                    <div class="result-card">
+                        <h2>Hasil Prediksi</h2>
+                        <div class="prediction-result">
+                            <p id="predictionText"></p>
+                            <p id="probabilityText"></p>
+                        </div>
+                        <button onclick="resetForm()" class="btn btn-secondary">Prediksi Lagi</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('bloodTestForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const features = [
+                parseFloat(document.getElementById('age').value),
+                parseFloat(document.getElementById('wbc').value),
+                parseFloat(document.getElementById('rbc').value),
+                parseFloat(document.getElementById('hgb').value),
+                parseFloat(document.getElementById('hct').value),
+                parseFloat(document.getElementById('plt').value)
+            ];
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model_name: 'blood_test', features: features })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    const sources = ['Normal', 'Patient'];
+                    const pred = sources[data.prediction];
+                    document.getElementById('predictionText').textContent = `Prediksi: ${pred}`;
+                    document.getElementById('probabilityText').textContent =
+                        `Confidence: ${(Math.max(...data.probability) * 100).toFixed(2)}%`;
+                    document.getElementById('result').style.display = 'block';
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan: ' + error);
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('bloodTestForm').reset();
+            document.getElementById('result').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

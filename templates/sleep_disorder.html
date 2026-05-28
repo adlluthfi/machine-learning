@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediksi Sleep Disorder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🤖 ML Prediction</div>
+            <ul class="nav-menu">
+                <li><a href="/">Dashboard</a></li>
+                <li><a href="/diabetes">Diabetes</a></li>
+                <li><a href="/blood-test">Blood Test</a></li>
+                <li><a href="/sleep-disorder" class="active">Sleep Disorder</a></li>
+                <li><a href="/test-model">Test Model</a></li>
+                <li><a href="/about">Tentang</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="form-section">
+            <h1>Prediksi Sleep Disorder</h1>
+            <p class="subtitle">Masukkan data tidur Anda untuk prediksi gangguan tidur</p>
+
+            <div class="form-container">
+                <form id="sleepForm" class="prediction-form">
+                    <div class="form-group">
+                        <label for="age">Usia (tahun):</label>
+                        <input type="number" id="age" name="age" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sleep_duration">Durasi Tidur (jam):</label>
+                        <input type="number" id="sleep_duration" name="sleep_duration" min="0" step="0.5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quality_of_sleep">Kualitas Tidur (1-10):</label>
+                        <input type="number" id="quality_of_sleep" name="quality_of_sleep" min="1" max="10" step="1"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="physical_activity">Aktivitas Fisik (menit/hari):</label>
+                        <input type="number" id="physical_activity" name="physical_activity" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stress_level">Tingkat Stres (1-10):</label>
+                        <input type="number" id="stress_level" name="stress_level" min="1" max="10" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="heart_rate">Detak Jantung (bpm):</label>
+                        <input type="number" id="heart_rate" name="heart_rate" min="0" step="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="daily_steps">Langkah Harian:</label>
+                        <input type="number" id="daily_steps" name="daily_steps" min="0" step="100" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">Prediksi</button>
+                </form>
+
+                <div id="result" class="result-container" style="display:none;">
+                    <div class="result-card">
+                        <h2>Hasil Prediksi</h2>
+                        <div class="prediction-result">
+                            <p id="predictionText"></p>
+                            <p id="probabilityText"></p>
+                        </div>
+                        <button onclick="resetForm()" class="btn btn-secondary">Prediksi Lagi</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ML Model Dashboard. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('sleepForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const features = [
+                parseFloat(document.getElementById('age').value),
+                parseFloat(document.getElementById('sleep_duration').value),
+                parseFloat(document.getElementById('quality_of_sleep').value),
+                parseFloat(document.getElementById('physical_activity').value),
+                parseFloat(document.getElementById('stress_level').value),
+                parseFloat(document.getElementById('heart_rate').value),
+                parseFloat(document.getElementById('daily_steps').value)
+            ];
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model_name: 'sleep_disorder', features: features })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    const disorders = ['None', 'Insomnia', 'Sleep Apnea'];
+                    const pred = disorders[data.prediction] || 'Unknown';
+                    document.getElementById('predictionText').textContent = `Prediksi: ${pred}`;
+                    document.getElementById('probabilityText').textContent =
+                        `Confidence: ${(Math.max(...data.probability) * 100).toFixed(2)}%`;
+                    document.getElementById('result').style.display = 'block';
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Terjadi kesalahan: ' + error);
+            }
+        });
+
+        function resetForm() {
+            document.getElementById('sleepForm').reset();
+            document.getElementById('result').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>
