@@ -159,8 +159,8 @@ Aplikasi ini untuk tujuan edukatif. Selalu konsultasikan dengan profesional medi
 
 ## 👨‍💻 Developer
 
-Created by: ML Student  
-Date: 2024
+Created by: ABdullah Luthfi (luthfikkc@gmail.com)
+Date: 2026
 
 ---
 
