@@ -37,7 +37,7 @@ flask-app/
 
 1. **Dashboard** (index.html) - Menampilkan semua model dan metriknya
 2. **Prediksi Diabetes** (diabetes.html) - Form untuk prediksi diabetes
-3. **Prediksi Blood Test** (blood_test.html) - Form untuk prediksi berdasarkan tes darah
+3. **Prediksi Blood Test** (blood_test.html) - Form untuk prediksi  memprediksi klasifikasi pasien) berdasarkan data pemeriksaan darah
 4. **Prediksi Sleep Disorder** (sleep_disorder.html) - Form untuk deteksi gangguan tidur
 5. **Test Model** (test_model.html) - Untuk testing akurasi model
 
@@ -159,7 +159,9 @@ Aplikasi ini untuk tujuan edukatif. Selalu konsultasikan dengan profesional medi
 
 ## 👨‍💻 Developer
 
-Created by: ABdullah Luthfi (luthfikkc@gmail.com)
+Created by: 
+- ABdullah Luthfi (luthfikkc@gmail.com)
+- Daniel Febrian Sijabat (danielsijaban@gmail.com)
 Date: 2026
 
 ---

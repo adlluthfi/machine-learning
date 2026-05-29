@@ -4,8 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prediksi Blood Test</title>
+    <title>Prediksi Blood Test - Patient Treatment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .model-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        .model-info h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .model-info p {
+            margin: 5px 0;
+            font-size: 0.95em;
+            color: #666;
+        }
+        
+        /* Styling untuk Select/Dropdown */
+        .form-group select {
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 5px;
+            font-size: 0.95em;
+            background-color: #ffffff;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233498db' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 20px;
+            padding-right: 35px;
+        }
+        
+        .form-group select:hover {
+            border-color: #3498db;
+            box-shadow: 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+        
+        .form-group select option {
+            padding: 10px;
+            color: #2c3e50;
+            background-color: #ffffff;
+        }
+        
+        .form-group select option:checked {
+            background: linear-gradient(#3498db, #3498db);
+            background-color: #3498db;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,53 +85,81 @@
 
     <div class="container">
         <section class="form-section">
-            <h1>Prediksi Blood Test</h1>
-            <p class="subtitle">Masukkan data hasil lab Anda untuk prediksi</p>
+            <h1>Prediksi Blood Test - Patient Treatment</h1>
+            <p class="subtitle">Masukkan data hasil pemeriksaan darah untuk prediksi perawatan pasien</p>
 
             <div class="form-container">
+                <div class="model-info">
+                    <h3>📋 Informasi Model</h3>
+                    <p><strong>Model:</strong> XGBoost Patient Treatment</p>
+                    <p><strong>Dataset:</strong> https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset</p>
+                    <p><strong>Target:</strong> Memprediksi Treatment (perawatan pasien)</p>
+                    <p><strong>Fitur yang digunakan:</strong> HAEMATOCRIT, ERYTHROCYTE, LEUCOCYTE, THROMBOCYTE, MCH, MCV, AGE, SEX</p>
+                </div>
+
                 <form id="bloodTestForm" class="prediction-form">
                     <div class="form-group">
-                        <label for="age">Usia (tahun):</label>
-                        <input type="number" id="age" name="age" min="0" step="1" required>
+                        <label for="age">Usia (AGE):</label>
+                        <input type="number" id="age" name="AGE" min="0" step="1" required placeholder="Masukkan usia dalam tahun">
                     </div>
 
                     <div class="form-group">
-                        <label for="wbc">WBC (White Blood Cell):</label>
-                        <input type="number" id="wbc" name="wbc" min="0" step="0.1" required>
+                        <label for="sex">Jenis Kelamin (SEX):</label>
+                        <select id="sex" name="SEX" required>
+                            <option value="" disabled selected style="color: #999;">-- Pilih Jenis Kelamin --</option>
+                            <option value="M" style="color: #2c3e50;">👨 Laki-laki (M)</option>
+                            <option value="F" style="color: #2c3e50;">👩 Perempuan (F)</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="rbc">RBC (Red Blood Cell):</label>
-                        <input type="number" id="rbc" name="rbc" min="0" step="0.1" required>
+                        <label for="haematocrit">Hematokrit (HAEMATOCRIT):</label>
+                        <input type="number" id="haematocrit" name="HAEMATOCRIT" min="0" step="0.1" required placeholder="contoh: 35.1">
                     </div>
 
                     <div class="form-group">
-                        <label for="hgb">Hemoglobin (Hgb):</label>
-                        <input type="number" id="hgb" name="hgb" min="0" step="0.1" required>
+                        <label for="erythrocyte">Eritrosit (ERYTHROCYTE):</label>
+                        <input type="number" id="erythrocyte" name="ERYTHROCYTE" min="0" step="0.01" required placeholder="contoh: 4.65">
                     </div>
 
                     <div class="form-group">
-                        <label for="hct">Hematocrit (Hct):</label>
-                        <input type="number" id="hct" name="hct" min="0" step="0.1" required>
+                        <label for="leucocyte">Leukosit (LEUCOCYTE):</label>
+                        <input type="number" id="leucocyte" name="LEUCOCYTE" min="0" step="0.1" required placeholder="contoh: 6.3">
                     </div>
 
                     <div class="form-group">
-                        <label for="plt">Platelets (Plt):</label>
-                        <input type="number" id="plt" name="plt" min="0" step="1" required>
+                        <label for="thrombocyte">Trombosit (THROMBOCYTE):</label>
+                        <input type="number" id="thrombocyte" name="THROMBOCYTE" min="0" step="1" required placeholder="contoh: 310">
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-large">Prediksi</button>
+                    <div class="form-group">
+                        <label for="mch">MCH (Mean Corpuscular Hemoglobin):</label>
+                        <input type="number" id="mch" name="MCH" min="0" step="0.1" required placeholder="contoh: 25.4">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mcv">MCV (Mean Corpuscular Volume):</label>
+                        <input type="number" id="mcv" name="MCV" min="0" step="0.1" required placeholder="contoh: 75.5">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large">🔮 Prediksi</button>
                 </form>
 
                 <div id="result" class="result-container" style="display:none;">
                     <div class="result-card">
-                        <h2>Hasil Prediksi</h2>
+                        <h2>📊 Hasil Prediksi</h2>
                         <div class="prediction-result">
                             <p id="predictionText"></p>
+                            <p id="predictionLabelText"></p>
                             <p id="probabilityText"></p>
+                            <div id="probabilityDetails" style="margin-top: 15px; font-size: 0.9em;"></div>
                         </div>
                         <button onclick="resetForm()" class="btn btn-secondary">Prediksi Lagi</button>
                     </div>
+                </div>
+
+                <div id="error" class="error-container" style="display:none; margin-top: 20px; padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; color: #721c24;">
+                    <p id="errorText"></p>
                 </div>
             </div>
         </section>
@@ -84,42 +172,65 @@
     <script>
         document.getElementById('bloodTestForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            const features = [
-                parseFloat(document.getElementById('age').value),
-                parseFloat(document.getElementById('wbc').value),
-                parseFloat(document.getElementById('rbc').value),
-                parseFloat(document.getElementById('hgb').value),
-                parseFloat(document.getElementById('hct').value),
-                parseFloat(document.getElementById('plt').value)
-            ];
+            
+            // Sembunyikan error sebelumnya
+            document.getElementById('error').style.display = 'none';
+            
+            // Kumpulkan data input
+            const inputData = {
+                AGE: parseFloat(document.getElementById('age').value),
+                SEX: document.getElementById('sex').value,
+                HAEMATOCRIT: parseFloat(document.getElementById('haematocrit').value),
+                ERYTHROCYTE: parseFloat(document.getElementById('erythrocyte').value),
+                LEUCOCYTE: parseFloat(document.getElementById('leucocyte').value),
+                THROMBOCYTE: parseFloat(document.getElementById('thrombocyte').value),
+                MCH: parseFloat(document.getElementById('mch').value),
+                MCV: parseFloat(document.getElementById('mcv').value)
+            };
 
             try {
-                const response = await fetch('/api/predict', {
+                const response = await fetch('/api/predict-blood-test', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ model_name: 'blood_test', features: features })
+                    body: JSON.stringify({ input: inputData })
                 });
 
                 const data = await response.json();
                 if (data.success) {
-                    const sources = ['Normal', 'Patient'];
-                    const pred = sources[data.prediction];
-                    document.getElementById('predictionText').textContent = `Prediksi: ${pred}`;
-                    document.getElementById('probabilityText').textContent =
-                        `Confidence: ${(Math.max(...data.probability) * 100).toFixed(2)}%`;
+                    // Tampilkan prediksi
+                    document.getElementById('predictionText').textContent = 
+                        `🎯 Prediksi: ${data.prediction_label || 'Unknown'}`;
+                    
+                    // Tampilkan probabilitas
+                    const maxProb = Math.max(...data.probability) * 100;
+                    document.getElementById('probabilityText').textContent = 
+                        `📈 Confidence: ${maxProb.toFixed(2)}%`;
+                    
+                    // Tampilkan detail probabilitas
+                    let probDetails = `<strong>Detail Probabilitas:</strong><br>`;
+                    data.probability.forEach((prob, idx) => {
+                        probDetails += `Kelas ${idx}: ${(prob * 100).toFixed(2)}%<br>`;
+                    });
+                    document.getElementById('probabilityDetails').innerHTML = probDetails;
+                    
                     document.getElementById('result').style.display = 'block';
                 } else {
-                    alert('Error: ' + data.error);
+                    showError('Error: ' + (data.error || 'Prediksi gagal'));
                 }
             } catch (error) {
-                alert('Terjadi kesalahan: ' + error);
+                showError('Terjadi kesalahan: ' + error.message);
             }
         });
 
         function resetForm() {
             document.getElementById('bloodTestForm').reset();
             document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+        }
+
+        function showError(message) {
+            document.getElementById('errorText').textContent = message;
+            document.getElementById('error').style.display = 'block';
         }
     </script>
 </body>
