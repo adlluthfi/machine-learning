@@ -162,6 +162,7 @@ Aplikasi ini untuk tujuan edukatif. Selalu konsultasikan dengan profesional medi
 Created by: 
 - ABdullah Luthfi (luthfikkc@gmail.com)
 - Daniel Febrian Sijabat (danielsijaban@gmail.com)
+
 Date: 2026
 
 ---
